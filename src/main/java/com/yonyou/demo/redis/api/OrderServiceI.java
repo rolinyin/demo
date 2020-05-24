@@ -14,7 +14,16 @@ import com.yonyou.demo.redis.entity.Order;
  */
 public interface OrderServiceI {
 
+	/**
+	 * 查询全部数据
+	 * @return
+	 */
 	List<Order> getAllOrders();
 
+	/**
+	 * 新增数据
+	 * @param record
+	 * @return
+	 */
 	int insert(Order record);
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * 
@@ -14,6 +15,7 @@ import lombok.Data;
  *          测试用例实体对象
  */
 @Data
+@ToString
 public class Order implements Serializable {
 	/**
 	 * uid

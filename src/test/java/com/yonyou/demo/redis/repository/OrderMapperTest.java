@@ -1,11 +1,9 @@
-package com.yonyou.demo.redis.service;
+package com.yonyou.demo.redis.repository;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
+import com.yonyou.demo.TestApplication;
+import com.yonyou.demo.redis.api.OrderServiceI;
+import com.yonyou.demo.redis.entity.Order;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.yonyou.demo.TestApplication;
-import com.yonyou.demo.redis.api.OrderServiceI;
-import com.yonyou.demo.redis.entity.Order;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @RunWith 注解作用：
@@ -28,15 +26,17 @@ import com.yonyou.demo.redis.entity.Order;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestApplication.class)
-public class OrderServiceTest {
+public class OrderMapperTest {
 
 	@Autowired
-	private OrderServiceI service;
+	private OrderMapper mapper;
 
 	private Order record;
 
+	private String id;
+
 	/**
-	 * @Before：在跑测试test001，test002时候都会各执行一次@Before部分的代码。
+     * @Before：在跑测试test001，test002时候都会各执行一次@Before部分的代码。
 	 *
 	 * @Beforeclass： 在类中只会被执行一次
 	 *
@@ -47,6 +47,7 @@ public class OrderServiceTest {
 	@BeforeClass
 	public void setUp() {
 		record = new Order();
+		id = UUID.randomUUID().toString();
 		record.setId(UUID.randomUUID().toString());
 		record.setVersion(0);
 		record.setCode("code");
@@ -57,13 +58,19 @@ public class OrderServiceTest {
 	@Test
 	public void testInsert() {
 
-		int result = service.insert(record);
+		int result = mapper.insert(record);
 		Assert.assertTrue(result == 1);
 	}
 
 	@Test
+	public void testGetById() {
+		Order result = mapper.getById(id);
+		Assert.assertSame(record.toString(), result.toString());
+	}
+
+	@Test
 	public void testGetAllOrders() {
-		List<Order> result = service.getAllOrders();
+		List<Order> result = mapper.getAllOrders();
 		result.forEach(System.out::println);
 	}
 }

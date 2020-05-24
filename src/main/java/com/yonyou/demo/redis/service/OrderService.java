@@ -1,6 +1,7 @@
 package com.yonyou.demo.redis.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.yonyou.demo.redis.api.OrderServiceI;
 import com.yonyou.demo.redis.entity.Order;
 import com.yonyou.demo.redis.repository.OrderMapper;
+import org.springframework.util.StringUtils;
 
 @Service
 public class OrderService implements OrderServiceI {
@@ -32,6 +34,10 @@ public class OrderService implements OrderServiceI {
 	@CacheEvict(value = "redis-order", allEntries = true)
 	public int insert(Order record) {
 		logger.info(" ------------------插入order---------------");
+		if(StringUtils.isEmpty(record.getId())){
+			//不规范，id越短越好
+			record.setId(UUID.randomUUID().toString());
+		}
 		return mapper.insert(record);
 	}
 

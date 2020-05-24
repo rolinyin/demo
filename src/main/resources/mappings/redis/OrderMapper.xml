@@ -12,16 +12,23 @@
   <sql id="Base_Column_List" >
     ID, VERSION, CODE, NAME, CREATIONTIME, REMARK
   </sql>
-  <select id="getAllOrders" resultMap="BaseResultMap">
+  <select id="getById" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     
     from sys_order
+    where id = #{id}
+  </select>
+  <select id="getAllOrders" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+
+    from sys_order
   </select>
   <insert id="insert" parameterType="com.yonyou.demo.redis.entity.Order" >
-    insert into sys_order (ID, VERSION, CODE, 
+    insert into sys_order (ID, VERSION, CODE,
       NAME, CREATIONTIME, REMARK )
-    values (#{id,jdbcType=VARCHAR}, 0, #{code,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, 0, #{code,jdbcType=VARCHAR},
       #{name,jdbcType=VARCHAR}, #{creationtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR} )
   </insert>
 </mapper>
