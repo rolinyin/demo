@@ -1,31 +1,22 @@
 package com.yonyou.demo.redis.service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
+import com.yonyou.demo.TestApplication;
+import com.yonyou.demo.redis.api.OrderServiceI;
+import com.yonyou.demo.redis.entity.Order;
+import com.yonyou.demo.redis.entity.Product;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.yonyou.demo.TestApplication;
-import com.yonyou.demo.redis.api.OrderServiceI;
-import com.yonyou.demo.redis.entity.Order;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
-/**
- * @RunWith 注解作用：
- * 	1.一个运行器
- *	2.JUnit运行使用Spring的测试支持
- *
- * @SpringBootTest 注解作用：
- * 	1.当前类为springboot的测试类
- * 	2.加载springboot启动类，启动springboot
- */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestApplication.class)
 public class OrderServiceTest {
@@ -35,22 +26,16 @@ public class OrderServiceTest {
 
 	private Order record;
 
-	/**
-	 * @Before：在跑测试test001，test002时候都会各执行一次@Before部分的代码。
-	 *
-	 * @Beforeclass： 在类中只会被执行一次
-	 *
-	 * @After：释放资源 对于每一个测试方法都要执行一次
-	 *
-	 * @Afterclass:所有测试用例执行完才执行一次
-	 */
+	private String id;
+
 	@BeforeClass
 	public void setUp() {
 		record = new Order();
+		id = UUID.randomUUID().toString();
 		record.setId(UUID.randomUUID().toString());
 		record.setVersion(0);
-		record.setCode("code");
-		record.setName("name");
+		record.setCode("code001");
+		record.setName("name001");
 		record.setCreationtime(new Date());
 	}
 
@@ -59,6 +44,22 @@ public class OrderServiceTest {
 
 		int result = service.insert(record);
 		Assert.assertTrue(result == 1);
+	}
+
+	@Test
+	public void testGetById() {
+		Order result = service.getById(id);
+
+		// 创建Mock对象，参数可以是类或者接口
+		Product product = Mockito.mock(Product.class);
+
+		//设置方法的预期返回值
+		Mockito.when(product.getOrderCode()).thenReturn("code001");
+
+		//验证方法调用
+		Mockito.verify(product).getOrderCode();
+
+		Assert.assertSame(result.getCode(), product.getOrderCode());
 	}
 
 	@Test

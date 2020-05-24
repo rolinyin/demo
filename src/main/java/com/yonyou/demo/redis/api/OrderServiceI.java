@@ -1,8 +1,8 @@
 package com.yonyou.demo.redis.api;
 
-import java.util.List;
-
 import com.yonyou.demo.redis.entity.Order;
+
+import java.util.List;
 
 /**
  * 
@@ -13,6 +13,13 @@ import com.yonyou.demo.redis.entity.Order;
  *          测试用例服务类
  */
 public interface OrderServiceI {
+
+	/**
+	 * 根据主键查询
+	 * @param id
+	 * @return
+	 */
+	Order getById(String id);
 
 	/**
 	 * 查询全部数据

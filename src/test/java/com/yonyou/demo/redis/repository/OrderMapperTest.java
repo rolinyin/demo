@@ -1,7 +1,6 @@
 package com.yonyou.demo.redis.repository;
 
 import com.yonyou.demo.TestApplication;
-import com.yonyou.demo.redis.api.OrderServiceI;
 import com.yonyou.demo.redis.entity.Order;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -65,6 +64,8 @@ public class OrderMapperTest {
 	@Test
 	public void testGetById() {
 		Order result = mapper.getById(id);
+		System.out.println(record.toString());
+		System.out.println(result.toString());
 		Assert.assertSame(record.toString(), result.toString());
 	}
 

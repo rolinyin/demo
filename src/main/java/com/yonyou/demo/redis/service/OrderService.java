@@ -1,19 +1,18 @@
 package com.yonyou.demo.redis.service;
 
-import java.util.List;
-import java.util.UUID;
-
+import com.yonyou.demo.redis.api.OrderServiceI;
+import com.yonyou.demo.redis.entity.Order;
+import com.yonyou.demo.redis.repository.OrderMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
-import com.yonyou.demo.redis.api.OrderServiceI;
-import com.yonyou.demo.redis.entity.Order;
-import com.yonyou.demo.redis.repository.OrderMapper;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class OrderService implements OrderServiceI {
@@ -22,6 +21,10 @@ public class OrderService implements OrderServiceI {
 
 	@Autowired
 	private OrderMapper mapper;
+
+	public Order getById(String id){
+		return mapper.getById(id);
+	}
 
 	@Override
 	@Cacheable(value = "redis-order", keyGenerator = "keyGenerator")
