@@ -1,10 +1,13 @@
 package com.yonyou.demo.redis.controller;
 
 import com.yonyou.demo.redis.api.OrderServiceI;
+import com.yonyou.demo.redis.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author ：yuelin.yin@rootcloud.com
@@ -23,6 +26,6 @@ public class OrderController {
     @GetMapping(value = "/orders")
     public Object getAllOrders(){
 
-        return service.getAllOrders();
+        return  service.getAllOrders();
     }
 }

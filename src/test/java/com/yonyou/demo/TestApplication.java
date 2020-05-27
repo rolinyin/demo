@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@EnableCaching
+//@EnableCaching
 @MapperScan({ "com.yonyou.demo.**.repository" })
 @ComponentScan({ "com.yonyou" })
 public class TestApplication {

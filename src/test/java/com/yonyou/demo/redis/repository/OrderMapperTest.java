@@ -4,8 +4,10 @@ import com.yonyou.demo.TestApplication;
 import com.yonyou.demo.redis.entity.Order;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -25,14 +27,15 @@ import java.util.UUID;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestApplication.class)
+@FixMethodOrder(MethodSorters.JVM)
 public class OrderMapperTest {
 
 	@Autowired
 	private OrderMapper mapper;
 
-	private Order record;
+	private static Order record;
 
-	private String id;
+	private static String id;
 
 	/**
      * @Before：在跑测试test001，test002时候都会各执行一次@Before部分的代码。
@@ -44,10 +47,10 @@ public class OrderMapperTest {
 	 * @Afterclass:所有测试用例执行完才执行一次
 	 */
 	@BeforeClass
-	public void setUp() {
+	public static void setUp() {
 		record = new Order();
 		id = UUID.randomUUID().toString();
-		record.setId(UUID.randomUUID().toString());
+		record.setId(id);
 		record.setVersion(0);
 		record.setCode("code");
 		record.setName("name");
@@ -66,7 +69,6 @@ public class OrderMapperTest {
 		Order result = mapper.getById(id);
 		System.out.println(record.toString());
 		System.out.println(result.toString());
-		Assert.assertSame(record.toString(), result.toString());
 	}
 
 	@Test
